@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Patients</title>
+</head>
+<body>
+  <h2>Patients</h2>
+  <ul id="list"></ul>
+
+  <script src="api.js"></script>
+  <script>
+    async function loadPatients() {
+      const patients = await apiRequest('/patients');
+      const list = document.getElementById('list');
+      list.innerHTML = '';
+
+      patients.forEach(p => {
+        const li = document.createElement('li');
+        li.textContent = `${p.firstName} ${p.lastName}`;
+        list.appendChild(li);
+      });
+    }
+
+    loadPatients();
+  </script>
+</body>
+</html>
