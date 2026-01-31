@@ -39,7 +39,7 @@ router.post('/', async (req, res) => {
 
 /**
  * PUT /api/patients/:id
- * Update patient by ID
+ * Update patient
  */
 router.put('/:id', async (req, res) => {
   try {
@@ -60,8 +60,26 @@ router.put('/:id', async (req, res) => {
 });
 
 /**
+ * DELETE /api/patients/:id
+ * Delete patient
+ */
+router.delete('/:id', async (req, res) => {
+  try {
+    const deletedPatient = await Patient.findByIdAndDelete(req.params.id);
+
+    if (!deletedPatient) {
+      return res.status(404).json({ message: 'Patient not found' });
+    }
+
+    res.json({ message: 'Patient deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+/**
  * GET /api/patients/stats/gender
- * Aggregation: count patients by gender
+ * Aggregation: patients count by gender
  */
 router.get('/stats/gender', async (req, res) => {
   try {
@@ -77,4 +95,11 @@ router.get('/stats/gender', async (req, res) => {
       },
     ]);
 
-    res
+    res.json(stats);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+module.exports = router;
+
