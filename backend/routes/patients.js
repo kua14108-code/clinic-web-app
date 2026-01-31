@@ -2,7 +2,10 @@ const express = require('express');
 const router = express.Router();
 const Patient = require('../models/Patient');
 
-// GET /api/patients
+/**
+ * GET /api/patients
+ * Get all patients
+ */
 router.get('/', async (req, res) => {
   try {
     const patients = await Patient.find();
@@ -11,7 +14,11 @@ router.get('/', async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
-// POST /api/patients
+
+/**
+ * POST /api/patients
+ * Create new patient
+ */
 router.post('/', async (req, res) => {
   try {
     const { firstName, lastName, dateOfBirth, gender } = req.body;
@@ -29,3 +36,45 @@ router.post('/', async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 });
+
+/**
+ * PUT /api/patients/:id
+ * Update patient by ID
+ */
+router.put('/:id', async (req, res) => {
+  try {
+    const updatedPatient = await Patient.findByIdAndUpdate(
+      req.params.id,
+      { $set: req.body },
+      { new: true }
+    );
+
+    if (!updatedPatient) {
+      return res.status(404).json({ message: 'Patient not found' });
+    }
+
+    res.json(updatedPatient);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
+/**
+ * GET /api/patients/stats/gender
+ * Aggregation: count patients by gender
+ */
+router.get('/stats/gender', async (req, res) => {
+  try {
+    const stats = await Patient.aggregate([
+      {
+        $group: {
+          _id: '$gender',
+          totalPatients: { $sum: 1 },
+        },
+      },
+      {
+        $sort: { totalPatients: -1 },
+      },
+    ]);
+
+    res
