@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Add Patient</title>
+</head>
+<body>
+  <h2>Add Patient</h2>
+
+  <input id="firstName" placeholder="First name" />
+  <input id="lastName" placeholder="Last name" />
+  <button onclick="add()">Add</button>
+
+  <script src="api.js"></script>
+  <script>
+    async function add() {
+      await apiRequest('/patients', 'POST', {
+        firstName: firstName.value,
+        lastName: lastName.value,
+      });
+      alert('Patient added');
+    }
+  </script>
+</body>
+</html>
