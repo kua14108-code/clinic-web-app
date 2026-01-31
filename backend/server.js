@@ -11,6 +11,7 @@ app.use(express.json());
 
 app.use('/api/patients', require('./routes/patients'));
 app.use('/api/visits', require('./routes/visits'));
+app.use('/api/auth', require('./routes/auth'));
 
 
 app.get('/', (req, res) => {
