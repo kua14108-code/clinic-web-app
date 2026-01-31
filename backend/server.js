@@ -1,3 +1,4 @@
+const patientRoutes = require('./routes/patients');
 const express = require('express');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
@@ -8,6 +9,7 @@ const app = express();
 connectDB();
 
 app.use(express.json());
+app.use('/api/patients', patientRoutes);
 
 app.get('/', (req, res) => {
   res.json({ message: 'Clinic API is running with MongoDB' });
