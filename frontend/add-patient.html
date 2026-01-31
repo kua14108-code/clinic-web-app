@@ -2,23 +2,35 @@
 <html>
 <head>
   <title>Add Patient</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h2>Add Patient</h2>
 
-  <input id="firstName" placeholder="First name" />
-  <input id="lastName" placeholder="Last name" />
-  <button onclick="add()">Add</button>
+<header>
+  <h1>Add Patient</h1>
+</header>
 
-  <script src="api.js"></script>
-  <script>
-    async function add() {
-      await apiRequest('/patients', 'POST', {
-        firstName: firstName.value,
-        lastName: lastName.value,
-      });
-      alert('Patient added');
-    }
-  </script>
+<div class="container">
+  <nav>
+    <a href="patients.html">Patients</a>
+    <a href="visits.html">Visits</a>
+  </nav>
+
+  <input id="firstName" placeholder="First name">
+  <input id="lastName" placeholder="Last name">
+  <button onclick="add()">Add Patient</button>
+</div>
+
+<script src="api.js"></script>
+<script>
+  async function add() {
+    await apiRequest('/patients', 'POST', {
+      firstName: firstName.value,
+      lastName: lastName.value
+    });
+    alert('Patient added');
+  }
+</script>
+
 </body>
 </html>
