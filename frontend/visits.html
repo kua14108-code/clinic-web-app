@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Visits</title>
+</head>
+<body>
+  <h2>Visits</h2>
+  <ul id="list"></ul>
+
+  <script src="api.js"></script>
+  <script>
+    async function loadVisits() {
+      const visits = await apiRequest('/visits');
+      const list = document.getElementById('list');
+
+      visits.forEach(v => {
+        const li = document.createElement('li');
+        li.textContent = v.diagnosis;
+        list.appendChild(li);
+      });
+    }
+
+    loadVisits();
+  </script>
+</body>
+</html>
