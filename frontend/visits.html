@@ -2,25 +2,38 @@
 <html>
 <head>
   <title>Visits</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h2>Visits</h2>
+
+<header>
+  <h1>Visits</h1>
+</header>
+
+<div class="container">
+  <nav>
+    <a href="patients.html">Patients</a>
+    <a href="add-patient.html">Add Patient</a>
+  </nav>
+
   <ul id="list"></ul>
+</div>
 
-  <script src="api.js"></script>
-  <script>
-    async function loadVisits() {
-      const visits = await apiRequest('/visits');
-      const list = document.getElementById('list');
+<script src="api.js"></script>
+<script>
+  async function loadVisits() {
+    const visits = await apiRequest('/visits');
+    const list = document.getElementById('list');
 
-      visits.forEach(v => {
-        const li = document.createElement('li');
-        li.textContent = v.diagnosis;
-        list.appendChild(li);
-      });
-    }
+    visits.forEach(v => {
+      const li = document.createElement('li');
+      li.textContent = v.diagnosis;
+      list.appendChild(li);
+    });
+  }
 
-    loadVisits();
-  </script>
+  loadVisits();
+</script>
+
 </body>
 </html>
