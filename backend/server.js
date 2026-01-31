@@ -10,6 +10,8 @@ connectDB();
 app.use(express.json());
 
 app.use('/api/patients', require('./routes/patients'));
+app.use('/api/visits', require('./routes/visits'));
+
 
 app.get('/', (req, res) => {
   res.json({ message: 'Clinic API is running' });
